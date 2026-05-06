@@ -9,14 +9,15 @@ const PRODUCTS = [
   { id: 6, name: 'Gold Standard', series: 'Luxury Series', price: 99.99, color: '#ffd700', seam: '#000000', label: 'LUXURY', emissive: 0x221100, bgHex: 0xffd700, envColor: '#1a1400', features: ['24K Metallic', 'Premium Display'], court: 'wood' },
   { id: 7, name: 'Ocean Deep', series: 'Marine Series', price: 39.99, color: '#004d40', seam: '#e0f2f1', label: 'OCEAN', emissive: 0x001111, bgHex: 0x004d40, envColor: '#000d0d', features: ['Hydro-Grip Tech', 'Deep Sea Teal'], court: 'asphalt' },
   { id: 8, name: 'Candy Rush', series: 'Pop Series', price: 44.99, color: '#f06292', seam: '#fff176', label: 'CANDY', emissive: 0x110011, bgHex: 0xf06292, envColor: '#1a000d', features: ['Hyper Bounce', 'Pop Aesthetics'], court: 'wood' },
+  { id: 9, name: 'Quantum Pro', series: 'Elite Pro Series', price: 129.99, color: '#6200ea', seam: '#ffab00', label: 'QUANTUM', emissive: 0x1a0033, bgHex: 0x6200ea, envColor: '#2a0047', features: ['Advanced Polymer', 'Precision Grip'], court: 'wood' },
 ];
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let cur = 0, prev = 0;
 let cart = [], wish = new Set();
-let ballScale = [1, 1, 1, 1, 1, 1, 1, 1, 1]; // target scales
-let ballY = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-let ballScaleCur = [1, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001];
+let ballScale = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // target scales
+let ballY = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let ballScaleCur = [1, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001];
 let isTransitioning = false;
 
 // ─── CURSOR ──────────────────────────────────────────────────────────────────
@@ -360,7 +361,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
 camera.position.set(0, 0, 5);
-function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.position.z = w < 768 ? 7.5 : 5; camera.updateProjectionMatrix(); }
 resize(); window.addEventListener('resize', resize);
 
 // Lighting
@@ -522,8 +523,8 @@ shadowPlane.rotation.x = -Math.PI / 2; shadowPlane.position.y = -1.99; shadowPla
 
 
 // Per-ball state
-const ballPos = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
-const ballRot = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+const ballPos = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+const ballRot = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
 let scrollProgress = 0; // Current smooth scroll progress
 let scrollProgressTarget = 0;
 let mxN = 0, myN = 0;
@@ -600,7 +601,7 @@ window.addEventListener('scroll', () => {
   const p = Math.max(0, Math.min(1, sy / stH));
   scrollProgressTarget = p; // continuous target for scale lerp
 
-  const idx = Math.min(PRODUCTS.length - 1, Math.floor(p * PRODUCTS.length + 0.5));
+  const idx = Math.min(PRODUCTS.length - 1, Math.round(p * (PRODUCTS.length - 1)));
 
   if (idx !== cur && now - lastScrollTime > 40) {
     setSlide(idx);
