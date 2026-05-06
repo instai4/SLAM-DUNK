@@ -1,96 +1,71 @@
-# Slam Dunk — 3D Basketball Showcase
+# Slam Dunk — Ultra-Premium 3D Basketball Showcase
 
-A cinematic interactive basketball showcase website built using **Vanilla JavaScript** and Three.js.
-
-This project was created while learning:
-
-- Vanilla JavaScript
-- Three.js
-- WebGL basics
-- Interactive UI animations
-- Dynamic 3D website experiences
-
-The goal of this project was to experiment with modern frontend interactions and create a visually immersive demo/storefront experience for showcasing products in 3D.
+A cinematic, high-performance interactive 3D basketball showroom engineered with **Three.js** and **Vanilla JavaScript**. This project pushes the boundaries of web-based product presentation through advanced WebGL rendering, procedural art, and liquid-smooth user interactions.
 
 ---
 
-# Features
+# 🚀 Core Features & Technical Deep-Dive
 
-- Interactive 3D basketball rendering
-- Dynamic product showcase
-- Smooth scroll-based transitions
-- Custom cursor effects
-- Animated cart system
-- Wishlist functionality
-- Toast notifications
-- Responsive mobile layout
-- Procedural basketball textures
-- Modern cinematic UI/UX
+### 🏀 1. High-Fidelity 3D Rendering Engine
+The experience is powered by a custom-tuned Three.js renderer featuring:
+- **PBR (Physically Based Rendering)**: Every basketball utilizes `MeshStandardMaterial` with custom-generated normal maps to simulate realistic pebbled leather and surface imperfections.
+- **Dynamic Gaussian Scaling**: A mathematical scaling algorithm (`Math.exp(-dist * dist * 6.5)`) ensures that only the active product is prominent, creating a focused, "one-at-a-time" cinematic transition during scroll.
+- **Adaptive Lighting Orchestration**: The scene dynamically interpolates between different lighting rigs (Ambient, Directional, and Point lights) to match the unique aesthetic of each basketball series.
 
----
+### 🎨 2. Procedural Texture Generation
+Unlike traditional stores that use heavy image assets, Slam Dunk generates its high-resolution textures on-the-fly using the HTML5 Canvas API:
+- **Lava Core**: Uses randomized recursive line-drawing with Gaussian shadows to simulate cracked earth.
+- **Midnight Marble**: Implements randomized linear gradients and elliptical masking for a luxury marble swirl.
+- **Standard Pebbles**: Mathematically scatters 25,000+ tiny arcs with varying opacity to create the iconic basketball "grip" texture without external assets.
 
-# Tech Stack
+### 🧪 3. Interactive Custom Lab (The Engine)
+A real-time customization pipeline that allows users to become designers:
+- **Live Preview System**: Changes to colors, seam styles, and patterns are instantly baked into a new `CanvasTexture` and applied to the 3D model.
+- **Dynamic Engraving**: User text is rendered directly into the 3D model's diffuse map using specialized typography alignment, allowing personalized names to appear physically "on" the ball.
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Three.js
-- WebGL
-- Canvas API
-- Google Fonts
-
----
-
-# Purpose of This Project
-
-This website is **not a production ecommerce store**.
-
-It was built as:
-
-- a learning project
-- a Three.js practice demo
-- an experiment with dynamic 3D websites
-- a showcase of frontend animation techniques
-
-The project helped me understand:
-
-- 3D rendering workflows
-- animation interpolation
-- interactive UI systems
-- WebGL scene management
-- responsive animation-heavy layouts
+### 🌊 4. Fluid UX & Environmental Scaling
+- **Liquid Environment Transitions**: Utilizing the **CSS `@property` API**, the site transitions background and vignette colors fluidly over 1.2s without the "flicker" typical of standard variable swaps.
+- **Magnetic UI Navigation**: A custom interaction layer that calculates cursor proximity to apply subtle translation and scale transforms, making the interface feel alive and responsive.
+- **"Power Spin" Interaction**: A physics-based rotation velocity system that allows users to "trick shot" the 3D models with momentum-based spinning on click.
 
 ---
 
-# Learning Goals
+# 🛠 Tech Stack & Engineering
 
-While building this project, I explored:
-
-- Scene setup in Three.js
-- Lighting and material systems
-- Procedural texture generation
-- Scroll-driven animations
-- Real-time rendering concepts
-- UI + 3D synchronization
-- Responsive layouts for 3D websites
-- Interactive product presentation
+| Category | Technology | Usage |
+| :--- | :--- | :--- |
+| **3D Engine** | Three.js (r128) | Scene graph, WebGL rendering, PBR materials, Camera orchestration. |
+| **Logic** | ES6+ JavaScript | State machine, scroll interpolation, and magnetic math. |
+| **Graphics** | Canvas API | Procedural texture synthesis and custom engraving logic. |
+| **Styling** | Modern CSS | CSS @property interpolation, Glassmorphism, and Flex/Grid layouts. |
+| **Performance** | WebGL | 60-FPS rendering with adaptive pixel ratios and PCFSoftShadowMaps. |
 
 ---
 
-# Disclaimer
+# 📈 Performance Optimization
 
-This is a demo/showcase project made for learning and experimentation purposes only.
-
-No real payments, backend services, or ecommerce systems are connected.
-
----
-
-# Preview
-
-The project simulates a premium sports/ecommerce landing page experience inspired by modern interactive web design.
+- **Zero Asset Loading**: By using procedural textures, the project eliminates large texture downloads, leading to near-instant "Time to Interactive."
+- **Adaptive Resolution**: The renderer automatically adjusts its pixel ratio based on device capability (capping at 2x) to maintain high frame rates on lower-end devices.
+- **Visibility Culling**: High-threshold visibility logic ensures that inactive 3D models are removed from the render loop, saving GPU cycles.
 
 ---
 
-# Author
+# 🎯 Project Purpose
 
-Made by **Anurag Singh** while learning advanced frontend and 3D web development.
+This is a **technical showcase** designed to demonstrate the feasibility of ultra-luxury 3D experiences on the web. It serves as a case study for:
+- Building high-performance 3D storefronts without frameworks.
+- Synchronizing 3D scene states with 2D DOM overlays.
+- Creating immersive brand storytelling through scroll-driven interaction.
+
+---
+
+# 👤 Author
+
+**Anurag Singh**
+*Specializing in High-Performance 3D Web Experiences*
+
+[Explore My Portfolio](https://instai4.github.io/PORT-FOLIO/) | [Contact via Portfolio](https://instai4.github.io/PORT-FOLIO/)
+
+---
+
+*Made with 🏀 and high-performance code.*

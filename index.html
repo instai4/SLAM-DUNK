@@ -1,351 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏀</text></svg>">
-<title>Slam Dunk — Basketball Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="dunk.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF5500' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10' fill='%23FF5500' fill-opacity='0.15'/><circle cx='12' cy='12' r='10'/><path d='M12 2a14 14 0 0 1 0 20'/><path d='M2 12h20'/><path d='M5 5.5a11 11 0 0 1 14 13'/><path d='M5 18.5a11 11 0 0 0 14-13'/></svg>">
+  <title>Slam Dunk — Basketball Store</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="dunk.css">
 </head>
+
 <body>
-<div id="noise"></div>
-<div id="cur"></div>
-<div id="cur-ring"></div>
-
-<!-- TOAST CONTAINER -->
-<div id="toast-wrap"></div>
-
-<!-- SEARCH BAR -->
-<div class="search-bar" id="searchBar">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-  <input type="text" placeholder="Search for balls, brands, sizes…" id="searchInput">
-  <button class="search-close" onclick="toggleSearch()">✕</button>
-</div>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="logo-icon">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>
-    </div>
-    <div>SLAM<br>DUNK</div>
-  </a>
-  <div class="nav-links">
-    <a href="#" class="active">Products</a>
-    <a href="#" onclick="showToast('info','🏗️ Coming Soon','Customize feature in development')">Customize</a>
-    <a href="#" onclick="openContactToast()">Contact</a>
+  <div id="noise"></div>
+  <div id="cur">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <path d="M12 2a14 14 0 0 1 0 20" stroke="currentColor" stroke-width="1" />
+      <path d="M2 12h20" stroke="currentColor" stroke-width="1" />
+      <path d="M5 5.5a11 11 0 0 1 14 13" stroke="currentColor" stroke-width="1" />
+      <path d="M5 18.5a11 11 0 0 0 14-13" stroke="currentColor" stroke-width="1" />
+    </svg>
   </div>
-  <div class="nav-actions">
-    <button class="nav-icon-btn" onclick="toggleSearch()" title="Search">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
-    <button class="nav-icon-btn" onclick="openWish()" title="Wishlist">
-      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span class="wish-count" id="wishCount">0</span>
-    </button>
-    <button class="nav-icon-btn" onclick="openCart()" title="Cart">
-      <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <span id="cart-count">0</span>
-    </button>
+  <div id="cur-ring"></div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-wrap"></div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar" id="searchBar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+    <input type="text" placeholder="Search for balls, brands, sizes…" id="searchInput">
+    <button class="search-close" onclick="toggleSearch()">✕</button>
   </div>
-</nav>
 
-<!-- WISHLIST PANEL -->
-<div class="drawer-overlay" id="wishOverlay" onclick="closeWish()"></div>
-<div id="wish-panel">
-  <div class="drawer-head">
-    <h3>WISHLIST</h3>
-    <button class="close-btn" onclick="closeWish()">✕</button>
-  </div>
-  <div class="cart-items" id="wishItems">
-    <div class="empty-cart">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <p>No items saved yet</p>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" fill="var(--orange)" fill-opacity="0.1" />
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 2a14 14 0 0 1 0 20" />
+          <path d="M2 12h20" />
+          <path d="M5 5.5a11 11 0 0 1 14 13" />
+          <path d="M5 18.5a11 11 0 0 0 14-13" />
+        </svg>
+      </div>
+      <div>SLAM<br>DUNK</div>
+    </a>
+    <div class="nav-links">
+      <a href="#" class="active magnetic">Products</a>
+      <a href="#" onclick="openCustom()" class="magnetic portfolio-glow-link">Customize</a>
+      <a href="https://instai4.github.io/PORT-FOLIO/" target="_blank" class="magnetic portfolio-cta">
+        <div class="portfolio-glow"></div>
+        Portfolio
+      </a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" onclick="toggleSearch()" title="Search">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+      </button>
+      <button class="nav-icon-btn" onclick="openWish()" title="Wishlist">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+        <span class="wish-count" id="wishCount">0</span>
+      </button>
+      <button class="nav-icon-btn" onclick="openCart()" title="Cart" id="cartBtn">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <span id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CUSTOM DRAWER -->
+  <div class="drawer-overlay" id="customOverlay" onclick="closeCustom()"></div>
+  <div id="custom-drawer">
+    <div class="drawer-head">
+      <h3>CUSTOM LAB</h3>
+      <button class="close-btn" onclick="closeCustom()">✕</button>
+    </div>
+    <div class="cart-items" style="padding:0;">
+      <div class="custom-section">
+        <span class="custom-label">Base Color</span>
+        <div class="custom-grid" id="baseColors"></div>
+      </div>
+      <div class="custom-section">
+        <span class="custom-label">Seam Color</span>
+        <div class="custom-grid" id="seamColors"></div>
+      </div>
+      <div class="custom-section">
+        <span class="custom-label">Pattern Style</span>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 24px;">
+          <button class="pattern-btn active" onclick="setPattern('classic', this)">Classic</button>
+          <button class="pattern-btn" onclick="setPattern('camo', this)">Camo</button>
+          <button class="pattern-btn" onclick="setPattern('marble', this)">Marble</button>
+          <button class="pattern-btn" onclick="setPattern('carbon', this)">Carbon</button>
+        </div>
+      </div>
+      <div class="custom-section">
+        <span class="custom-label">Custom Engraving</span>
+        <div style="padding:0 24px;">
+          <input type="text" class="custom-input" placeholder="Type name..." oninput="setEngraving(this.value)"
+            maxlength="12">
+        </div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Custom Build</span>
+        <span class="cart-total-val">$129.99</span>
+      </div>
+      <button class="checkout-btn" onclick="addCustomToCart()">ADD CUSTOM TO CART</button>
     </div>
   </div>
-</div>
 
-<!-- CART DRAWER -->
-<div class="drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div id="cart-drawer">
-  <div class="drawer-head">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <h3>CART</h3>
-      <span class="drawer-badge" id="cart-badge">0</span>
+  <!-- WISHLIST PANEL -->
+  <div class="drawer-overlay" id="wishOverlay" onclick="closeWish()"></div>
+  <div id="wish-panel">
+    <div class="drawer-head">
+      <h3>WISHLIST</h3>
+      <button class="close-btn" onclick="closeWish()">✕</button>
     </div>
-    <button class="close-btn" onclick="closeCart()">✕</button>
+    <div class="cart-items" id="wishItems">
+      <div class="empty-cart">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+        <p>No items saved yet</p>
+      </div>
+    </div>
   </div>
-  <div class="cart-items" id="cartItems">
-    <div class="empty-cart" id="emptyCart">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <p>Your cart is empty</p>
+
+  <!-- CART DRAWER -->
+  <div class="drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div id="cart-drawer">
+    <div class="drawer-head">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h3>CART</h3>
+        <span class="drawer-badge" id="cart-badge">0</span>
+      </div>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="empty-cart" id="emptyCart">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cartTotal">$0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">CHECKOUT</button>
     </div>
   </div>
-  <div class="drawer-footer">
-    <div class="cart-total-row">
-      <span class="cart-total-label">Total</span>
-      <span class="cart-total-val" id="cartTotal">$0.00</span>
-    </div>
-    <button class="checkout-btn" onclick="checkout()">CHECKOUT</button>
+
+
+  <!-- PROGRESS DOTS -->
+  <div id="dots"></div>
+
+  <!-- PAGE COUNTER -->
+  <div id="pgc"><span class="cur" id="pgCur">01</span> / 09</div>
+
+  <!-- SCROLL HINT -->
+  <div id="scroll-hint">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
   </div>
-</div>
 
-<!-- PROMO MODAL -->
-<div id="vid-modal">
-  <div class="vid-inner">
-    <h3>PROMOTIONAL VIDEO</h3>
-    <p>Experience the game like never before. Watch our latest campaign featuring top NBA players and the official game balls.</p>
-    <div style="background:#0a0a0a;border:1px solid #1e1e1e;height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
-      <div style="width:60px;height:60px;border-radius:50%;border:2px solid var(--orange);display:flex;align-items:center;justify-content:center;cursor:pointer;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--orange)" style="margin-left:4px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+  <!-- STAGE -->
+  <div id="stage">
+    <div id="sticky">
+      <div class="vig" id="vignette"></div>
+      <div class="ball-tooltip" id="tooltip-1" style="top:30%; left:60%;">
+        <div class="tooltip-line"></div>
+        <div class="tooltip-text" id="tt-text-1">PRO GRIP</div>
       </div>
+      <div class="ball-tooltip" id="tooltip-2" style="top:55%; left:65%;">
+        <div class="tooltip-line"></div>
+        <div class="tooltip-text" id="tt-text-2">OFFICIAL WEIGHT</div>
+      </div>
+      <div class="bg-brand"><span id="bgTxt">SPALDING</span></div>
+      <canvas id="c"></canvas>
+
+      <!-- SLIDES -->
+      <div class="sl active" id="sl-0">
+        <div class="left-panel">
+          <div class="series-tag">Classic Series</div>
+          <div class="ball-name">Official<br>Game Ball</div>
+          <div class="ball-desc">The gold standard since 1983. Used in every NBA game worldwide.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">622g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.9</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="size-picker">
+            <span class="size-label">Size</span>
+            <button class="size-opt active" data-size="5">5</button>
+            <button class="size-opt" data-size="6">6</button>
+            <button class="size-opt active" data-size="7">7</button>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#FF5500;" data-color="#FF5500" title="Classic Orange"></div>
+            <div class="color-dot" style="background:#c44400;" data-color="#c44400" title="Deep Orange">
+            </div>
+            <div class="color-dot" style="background:#222;" data-color="#222" title="Midnight Black"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(0)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-0" onclick="toggleWish(0)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+            <button class="btn-ghost" onclick="shareProduct(0)" title="Share">
+              <svg viewBox="0 0 24 24">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">NBA Official</div>
+          <div class="rtag">Indoor / Outdoor</div>
+          <div class="rtag">Pro Grip</div>
+          <div class="rtag">Full Grain Leather</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$34.99</div>
+            <div class="price-note">Free shipping on orders over $50</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-1">
+        <div class="left-panel">
+          <div class="series-tag">Elite Series</div>
+          <div class="ball-name">Pro<br>Tournament</div>
+          <div class="ball-desc">Microfiber composite leather. Tournament-grade performance for champions.
+          </div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">618g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.8</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="size-picker">
+            <span class="size-label">Size</span>
+            <button class="size-opt" data-size="5">5</button>
+            <button class="size-opt active" data-size="6">6</button>
+            <button class="size-opt active" data-size="7">7</button>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#1a6aff;" data-color="#1a6aff" title="Pro Blue">
+            </div>
+            <div class="color-dot" style="background:#0a3aaa;" data-color="#0a3aaa" title="Deep Blue"></div>
+            <div class="color-dot" style="background:#1a1a1a;" data-color="#1a1a1a" title="Midnight"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(1)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-1" onclick="toggleWish(1)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+            <button class="btn-ghost" onclick="shareProduct(1)" title="Share">
+              <svg viewBox="0 0 24 24">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Pro Edition</div>
+          <div class="rtag">Microfiber</div>
+          <div class="rtag">Tournament</div>
+          <div class="rtag">FIBA Approved</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$59.99</div>
+            <div class="price-note">Free shipping on orders over $50</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-2">
+        <div class="left-panel">
+          <div class="series-tag">Street Series</div>
+          <div class="ball-name">Street<br>Slam Rider</div>
+          <div class="ball-desc">Built for the blacktop. All-weather rubber with anti-skid grip channels.
+          </div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">640g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.7</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="size-picker">
+            <span class="size-label">Size</span>
+            <button class="size-opt active" data-size="5">5</button>
+            <button class="size-opt active" data-size="6">6</button>
+            <button class="size-opt active" data-size="7">7</button>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#222;" data-color="#222" title="Street Black">
+            </div>
+            <div class="color-dot" style="background:#FF5500;" data-color="#FF5500" title="Fire Orange">
+            </div>
+            <div class="color-dot" style="background:#1a6aff;" data-color="#1a6aff" title="Sky Blue"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(2)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-2" onclick="toggleWish(2)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+            <button class="btn-ghost" onclick="shareProduct(2)" title="Share">
+              <svg viewBox="0 0 24 24">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Street King</div>
+          <div class="rtag">All-Weather</div>
+          <div class="rtag">Durable Rubber</div>
+          <div class="rtag">Anti-Skid Grip</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$24.99</div>
+            <div class="price-note">Free shipping on orders over $50</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-3">
+        <div class="left-panel">
+          <div class="series-tag">Signature Series</div>
+          <div class="ball-name">Midnight<br>Edition</div>
+          <div class="ball-desc">Limited collector's drop. Custom hand-painted. Only 500 made worldwide.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">610g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 5.0</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="size-picker">
+            <span class="size-label">Size</span>
+            <button class="size-opt" data-size="5">5</button>
+            <button class="size-opt" data-size="6">6</button>
+            <button class="size-opt active" data-size="7">7</button>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#8B1A1A;" data-color="#8B1A1A" title="Crimson">
+            </div>
+            <div class="color-dot" style="background:#1a1a2e;" data-color="#1a1a2e" title="Midnight Navy">
+            </div>
+            <div class="color-dot" style="background:#2d1b00;" data-color="#2d1b00" title="Dark Gold"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(3)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-3" onclick="toggleWish(3)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+            <button class="btn-ghost" onclick="shareProduct(3)" title="Share">
+              <svg viewBox="0 0 24 24">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Limited Ed.</div>
+          <div class="rtag">Custom Paint</div>
+          <div class="rtag">Collector</div>
+          <div class="rtag">Only 500 Made</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$89.99</div>
+            <div class="price-note">Only 47 left in stock</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-4">
+        <div class="left-panel">
+          <div class="series-tag">Frost Series</div>
+          <div class="ball-name">Arctic<br>Frost</div>
+          <div class="ball-desc">Stay cool under pressure. Ice-blue surface with thermal-insulating grip for
+            cold weather play.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">615g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.9</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#e0f7fa;" data-color="#e0f7fa" title="Arctic White"></div>
+            <div class="color-dot" style="background:#b2ebf2;" data-color="#b2ebf2" title="Ice Blue"></div>
+            <div class="color-dot" style="background:#006064;" data-color="#006064" title="Deep Sea"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(4)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-4" onclick="toggleWish(4)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Winter Spec</div>
+          <div class="rtag">Ice Grip</div>
+          <div class="rtag">Cool Blue</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$49.99</div>
+            <div class="price-note">All-weather performance</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-5">
+        <div class="left-panel">
+          <div class="series-tag">Magma Series</div>
+          <div class="ball-name">Lava<br>Core</div>
+          <div class="ball-desc">Ignite the court. Volcanic grey finish with glowing heat-reactive orange
+            channels.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">628g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.8</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#212121;" data-color="#212121" title="Obsidian">
+            </div>
+            <div class="color-dot" style="background:#424242;" data-color="#424242" title="Volcanic Grey">
+            </div>
+            <div class="color-dot" style="background:#ff3d00;" data-color="#ff3d00" title="Magma"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(5)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-5" onclick="toggleWish(5)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Heat Reactive</div>
+          <div class="rtag">Glow Seams</div>
+          <div class="rtag">Pro Series</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$54.99</div>
+            <div class="price-note">Feel the heat</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-6">
+        <div class="left-panel">
+          <div class="series-tag">Luxury Series</div>
+          <div class="ball-name">Gold<br>Standard</div>
+          <div class="ball-desc">The ultimate trophy ball. 24K-inspired metallic finish with premium black
+            leather seams.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">610g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 5.0</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#ffd700;" data-color="#ffd700" title="24K Gold">
+            </div>
+            <div class="color-dot" style="background:#b8860b;" data-color="#b8860b" title="Burnished Gold">
+            </div>
+            <div class="color-dot" style="background:#1a1a1a;" data-color="#1a1a1a" title="Royal Black">
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(6)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-6" onclick="toggleWish(6)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Limited Drop</div>
+          <div class="rtag">Metallic</div>
+          <div class="rtag">Collector</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$99.99</div>
+            <div class="price-note">Premium display edition</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-7">
+        <div class="left-panel">
+          <div class="series-tag">Marine Series</div>
+          <div class="ball-name">Ocean<br>Deep</div>
+          <div class="ball-desc">Deep-sea performance. Hydro-grip technology for superior control even in high
+            humidity.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">622g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.7</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#004d40;" data-color="#004d40" title="Teal Abyss"></div>
+            <div class="color-dot" style="background:#00695c;" data-color="#00695c" title="Marine Teal">
+            </div>
+            <div class="color-dot" style="background:#e0f2f1;" data-color="#e0f2f1" title="Surf Foam"></div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(7)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-7" onclick="toggleWish(7)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Hydro Grip</div>
+          <div class="rtag">Outdoor Tech</div>
+          <div class="rtag">Deep Teal</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$39.99</div>
+            <div class="price-note">Moisture resistant</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sl" id="sl-8">
+        <div class="left-panel">
+          <div class="series-tag">Pop Series</div>
+          <div class="ball-name">Candy<br>Rush</div>
+          <div class="ball-desc">Sweeten your game. High-contrast pop colors with hyper-responsive bounce
+            core.</div>
+          <div class="stats-bar">
+            <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
+            <div class="stat-item"><span class="stat-val">618g</span><span class="stat-lbl">Weight</span>
+            </div>
+            <div class="stat-item"><span class="stat-val">★ 4.6</span><span class="stat-lbl">Rating</span>
+            </div>
+          </div>
+          <div class="color-picker">
+            <span class="size-label" style="margin-right:4px;">Color</span>
+            <div class="color-dot active" style="background:#f06292;" data-color="#f06292" title="Sugar Pink"></div>
+            <div class="color-dot" style="background:#ba68c8;" data-color="#ba68c8" title="Grape Pop"></div>
+            <div class="color-dot" style="background:#fff176;" data-color="#fff176" title="Lemon Zest">
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="btn-primary" onclick="addToCart(8)">ADD TO CART</button>
+            <button class="btn-ghost" id="wish-8" onclick="toggleWish(8)" title="Wishlist">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="rtags">
+          <div class="rtag hi">Pop Colors</div>
+          <div class="rtag">Hyper Bounce</div>
+          <div class="rtag">Youth Fav</div>
+        </div>
+        <div class="btm">
+          <div class="price-wrap">
+            <div class="price-main">$44.99</div>
+            <div class="price-note">Express your style</div>
+          </div>
+          <div class="nav-arrows">
+            <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24">
+                <polyline points="15 18 9 12 15 6" />
+              </svg></button>
+            <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24">
+                <polyline points="9 6 15 12 9 18" />
+              </svg></button>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <button class="vid-close" onclick="closeModal()">CLOSE</button>
   </div>
-</div>
 
-<!-- PROGRESS DOTS -->
-<div id="dots"></div>
 
-<!-- PAGE COUNTER -->
-<div id="pgc"><span class="cur" id="pgCur">01</span> / 04</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<!-- SCROLL HINT -->
-<div id="scroll-hint">
-  <span class="scroll-text">Scroll</span>
-  <div class="scroll-line"></div>
-</div>
-
-<!-- STAGE -->
-<div id="stage">
-  <div id="sticky">
-    <div class="vig"></div>
-    <div class="bg-brand"><span id="bgTxt">SPALDING</span></div>
-    <canvas id="c"></canvas>
-
-    <!-- SLIDES -->
-    <div class="sl active" id="sl-0">
-      <div class="left-panel">
-        <div class="series-tag">Classic Series</div>
-        <div class="ball-name">Official<br>Game Ball</div>
-        <div class="ball-desc">The gold standard since 1983. Used in every NBA game worldwide.</div>
-        <div class="stats-bar">
-          <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
-          <div class="stat-item"><span class="stat-val">622g</span><span class="stat-lbl">Weight</span></div>
-          <div class="stat-item"><span class="stat-val">★ 4.9</span><span class="stat-lbl">Rating</span></div>
-        </div>
-        <div class="size-picker">
-          <span class="size-label">Size</span>
-          <button class="size-opt active" data-size="5">5</button>
-          <button class="size-opt" data-size="6">6</button>
-          <button class="size-opt active" data-size="7">7</button>
-        </div>
-        <div class="color-picker">
-          <span class="size-label" style="margin-right:4px;">Color</span>
-          <div class="color-dot active" style="background:#FF5500;" data-color="#FF5500" title="Classic Orange"></div>
-          <div class="color-dot" style="background:#c44400;" data-color="#c44400" title="Deep Orange"></div>
-          <div class="color-dot" style="background:#222;" data-color="#222" title="Midnight Black"></div>
-        </div>
-        <div class="action-row">
-          <button class="btn-primary" onclick="addToCart(0)">ADD TO CART</button>
-          <button class="btn-ghost" id="wish-0" onclick="toggleWish(0)" title="Wishlist">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="openModal()" title="Watch promo">
-            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="none"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="shareProduct(0)" title="Share">
-            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="rtags">
-        <div class="rtag hi">NBA Official</div>
-        <div class="rtag">Indoor / Outdoor</div>
-        <div class="rtag">Pro Grip</div>
-        <div class="rtag">Full Grain Leather</div>
-      </div>
-      <div class="btm">
-        <div class="price-wrap">
-          <div class="price-main">$34.99</div>
-          <div class="price-note">Free shipping on orders over $50</div>
-        </div>
-        <div class="nav-arrows">
-          <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl" id="sl-1">
-      <div class="left-panel">
-        <div class="series-tag">Elite Series</div>
-        <div class="ball-name">Pro<br>Tournament</div>
-        <div class="ball-desc">Microfiber composite leather. Tournament-grade performance for champions.</div>
-        <div class="stats-bar">
-          <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
-          <div class="stat-item"><span class="stat-val">618g</span><span class="stat-lbl">Weight</span></div>
-          <div class="stat-item"><span class="stat-val">★ 4.8</span><span class="stat-lbl">Rating</span></div>
-        </div>
-        <div class="size-picker">
-          <span class="size-label">Size</span>
-          <button class="size-opt" data-size="5">5</button>
-          <button class="size-opt active" data-size="6">6</button>
-          <button class="size-opt active" data-size="7">7</button>
-        </div>
-        <div class="color-picker">
-          <span class="size-label" style="margin-right:4px;">Color</span>
-          <div class="color-dot active" style="background:#1a6aff;" data-color="#1a6aff" title="Pro Blue"></div>
-          <div class="color-dot" style="background:#0a3aaa;" data-color="#0a3aaa" title="Deep Blue"></div>
-          <div class="color-dot" style="background:#1a1a1a;" data-color="#1a1a1a" title="Midnight"></div>
-        </div>
-        <div class="action-row">
-          <button class="btn-primary" onclick="addToCart(1)">ADD TO CART</button>
-          <button class="btn-ghost" id="wish-1" onclick="toggleWish(1)" title="Wishlist">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="openModal()" title="Watch promo">
-            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="none"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="shareProduct(1)" title="Share">
-            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="rtags">
-        <div class="rtag hi">Pro Edition</div>
-        <div class="rtag">Microfiber</div>
-        <div class="rtag">Tournament</div>
-        <div class="rtag">FIBA Approved</div>
-      </div>
-      <div class="btm">
-        <div class="price-wrap">
-          <div class="price-main">$59.99</div>
-          <div class="price-note">Free shipping on orders over $50</div>
-        </div>
-        <div class="nav-arrows">
-          <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl" id="sl-2">
-      <div class="left-panel">
-        <div class="series-tag">Street Series</div>
-        <div class="ball-name">Street<br>Slam Rider</div>
-        <div class="ball-desc">Built for the blacktop. All-weather rubber with anti-skid grip channels.</div>
-        <div class="stats-bar">
-          <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
-          <div class="stat-item"><span class="stat-val">640g</span><span class="stat-lbl">Weight</span></div>
-          <div class="stat-item"><span class="stat-val">★ 4.7</span><span class="stat-lbl">Rating</span></div>
-        </div>
-        <div class="size-picker">
-          <span class="size-label">Size</span>
-          <button class="size-opt active" data-size="5">5</button>
-          <button class="size-opt active" data-size="6">6</button>
-          <button class="size-opt active" data-size="7">7</button>
-        </div>
-        <div class="color-picker">
-          <span class="size-label" style="margin-right:4px;">Color</span>
-          <div class="color-dot active" style="background:#222;" data-color="#222" title="Street Black"></div>
-          <div class="color-dot" style="background:#FF5500;" data-color="#FF5500" title="Fire Orange"></div>
-          <div class="color-dot" style="background:#1a6aff;" data-color="#1a6aff" title="Sky Blue"></div>
-        </div>
-        <div class="action-row">
-          <button class="btn-primary" onclick="addToCart(2)">ADD TO CART</button>
-          <button class="btn-ghost" id="wish-2" onclick="toggleWish(2)" title="Wishlist">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="openModal()" title="Watch promo">
-            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="none"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="shareProduct(2)" title="Share">
-            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="rtags">
-        <div class="rtag hi">Street King</div>
-        <div class="rtag">All-Weather</div>
-        <div class="rtag">Durable Rubber</div>
-        <div class="rtag">Anti-Skid Grip</div>
-      </div>
-      <div class="btm">
-        <div class="price-wrap">
-          <div class="price-main">$24.99</div>
-          <div class="price-note">Free shipping on orders over $50</div>
-        </div>
-        <div class="nav-arrows">
-          <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl" id="sl-3">
-      <div class="left-panel">
-        <div class="series-tag">Signature Series</div>
-        <div class="ball-name">Midnight<br>Edition</div>
-        <div class="ball-desc">Limited collector's drop. Custom hand-painted. Only 500 made worldwide.</div>
-        <div class="stats-bar">
-          <div class="stat-item"><span class="stat-val">29.5"</span><span class="stat-lbl">Circumference</span></div>
-          <div class="stat-item"><span class="stat-val">610g</span><span class="stat-lbl">Weight</span></div>
-          <div class="stat-item"><span class="stat-val">★ 5.0</span><span class="stat-lbl">Rating</span></div>
-        </div>
-        <div class="size-picker">
-          <span class="size-label">Size</span>
-          <button class="size-opt" data-size="5">5</button>
-          <button class="size-opt" data-size="6">6</button>
-          <button class="size-opt active" data-size="7">7</button>
-        </div>
-        <div class="color-picker">
-          <span class="size-label" style="margin-right:4px;">Color</span>
-          <div class="color-dot active" style="background:#8B1A1A;" data-color="#8B1A1A" title="Crimson"></div>
-          <div class="color-dot" style="background:#1a1a2e;" data-color="#1a1a2e" title="Midnight Navy"></div>
-          <div class="color-dot" style="background:#2d1b00;" data-color="#2d1b00" title="Dark Gold"></div>
-        </div>
-        <div class="action-row">
-          <button class="btn-primary" onclick="addToCart(3)">ADD TO CART</button>
-          <button class="btn-ghost" id="wish-3" onclick="toggleWish(3)" title="Wishlist">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="openModal()" title="Watch promo">
-            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="none"/></svg>
-          </button>
-          <button class="btn-ghost" onclick="shareProduct(3)" title="Share">
-            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="rtags">
-        <div class="rtag hi">Limited Ed.</div>
-        <div class="rtag">Custom Paint</div>
-        <div class="rtag">Collector</div>
-        <div class="rtag">Only 500 Made</div>
-      </div>
-      <div class="btm">
-        <div class="price-wrap">
-          <div class="price-main">$89.99</div>
-          <div class="price-note">Only 47 left in stock</div>
-        </div>
-        <div class="nav-arrows">
-          <button class="arr" onclick="goSlide(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="arr" onclick="goSlide(1)"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- REVIEW TICKER -->
-<div id="review-ticker">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="dunk.js"></script>
 </body>
+
+<script src="dunk.js"></script>
+
 </html>
