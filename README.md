@@ -4,7 +4,7 @@ A cinematic, high-performance interactive 3D basketball showroom engineered with
 
 ---
 
-# 🚀 Core Features & Technical Deep-Div
+# 🚀 Core Features & Technical Deep-Dive
 
 ### 🏀 1. High-Fidelity 3D Rendering Engine
 The experience is powered by a custom-tuned Three.js renderer featuring:
